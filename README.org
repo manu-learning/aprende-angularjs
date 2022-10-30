@@ -1,0 +1,142 @@
+* Objetivo
+  #+BEGIN_QUOTE
+  Comparar características similares entre distintos frameworks de javascript (/reactjs, angularjs, vuejs/)
+  #+END_QUOTE
+* Configuración de Servidor HTTP
+   #+BEGIN_QUOTE
+   Las alternativas dadas son con *python*, pero podríamos usar *nodejs*
+   - ~httpwatch~ permite observar cambios en los archivos de directorios y refrescar la pestaña del navegador
+   - ~SimpleHTTPServer~ es aún más simple, es html estático
+   #+END_QUOTE
+** Python HttpWatch
+*** Instalación
+    #+BEGIN_SRC shell
+    # instalamos el paquete
+    pip install httpwatcher
+    #+END_SRC
+*** Referencias
+    1. [[https://pypi.org/project/httpwatcher/][Httpwatcher (pypi.org)]]
+** Python SimpleHTTPServer
+  #+BEGIN_SRC shell :session servidor-http
+  # iniciar un simple servidor HTTP desde la terminal
+  # pero no observa los cambios en los archivos y por tanto tampoco refresca el navegador
+  cd output && python -m SimpleHTTPServer 8080
+  #+END_SRC
+* Expresiones
+  #+BEGIN_COMMENT
+  Por el momento exportar el código con ~C-c C-v t~ que ejecuta ~org-babel-tangle~
+  #+END_COMMENT
+** AngularJS
+   #+BEGIN_SRC html :results value html :tangle "output/expresiones.html"
+     <!DOCTYPE html>
+     <html>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+     <body>
+
+     <div ng-app="" ng-init="cantidad=1;costo=5;nombre='Carlitos';apellido='Samuel';persona={nombre:'carlitos',edad:19};puntos=[10,10,0]">
+     <h3>Operaciones basicas</h3>
+     <p>Operar numeros entre llaves 5+5= {{5+5}}</p>
+     <p>Operar numeros de ng-init, precio={{ cantidad * costo }}</p>
+     <p>Operar numeros en ng-bind, precio=<span ng-bind="cantidad * costo"></span></p>
+     <p>Concatenar cadenas de ng-init con las llaves.. {{nombre + " " + apellido}}</p>
+     
+     <h3>Accediendo a objetos</h3>
+     <p>nombre={{persona.nombre}}, edad={{persona.edad}}</p>
+     <p>usando ng-bind, nombre=<span ng-bind="persona.nombre"></span> edad=<span ng-bind="persona.edad"></span></p>
+     </div>
+
+     <h3>Arrays</h3>
+     <p>Arrays de ng-init.. puntos[0] = {{ puntos[1] }}</p>
+     <p>Arrays en ng-bind.. puntos[0] = <span ng-bind="puntos[1]"></span></p>
+     </body>
+     </html>
+   #+END_SRC
+* Estrategias de Data Binding
+  #+BEGIN_COMMENT
+  Por el momento exportar el código con ~C-c C-v t~ que ejecuta ~org-babel-tangle~
+
+  Evaluar si luego de integrar ejemplos de vuejs reactjs si conviene crear un estrategias-data-binding.org
+  #+END_COMMENT
+** 2-Way Binding (AngularJS)
+   #+BEGIN_QUOTE
+   En *angularJS* existe el concepto de *2-Way Binding*,
+   cuyo objetivo es actualizar de forma sincrónica y bidireccional el *Modelo de Datos* y la *UI*
+
+   Si se actualiza el estado de la aplicación (definido en nuestro Modelo de Datos),
+   entonces que el framework actualice la UI (los elementos del DOM que el Browser muestra al usuario)
+
+   Si se actualiza la UI, entonces que se actualice el estado de la aplicación (el Modelo de Datos que definimos)
+   #+END_QUOTE
+** 1-Way Binding (ReactJS)
+   #+BEGIN_QUOTE
+   Hay quienes dicen que este concepto de *2-Way binding* (lo utiliza AngularJS)
+   se vuelve muy complejo de manejar en una aplicación con modelos de datos de grandes dimensiones.
+
+   Por tanto se recomienda utiliza algo del tipo *1-way Binding* (lo utiliza ReactJS)
+   que es más simple y consiste en "si se modifica el modelo de datos, se actualice la UI"
+   por tanto es unidireccional Modelo->UI
+   #+END_QUOTE
+** Ejemplo
+*** AngularJS
+   #+BEGIN_SRC html :results value html :tangle "output/angularjs-data-binding.html"
+     <!DOCTYPE html>
+     <html>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+     <body>
+
+     <div ng-app="starshipEnterprise" ng-controller="inputController">
+     <h3>Ingresar Datos Personales</h3>
+     
+     <!--
+     Con el atributo ng-model bindeamos/vinculamos la UI (los elementos input del DOM) al Modelo de Datos (que definimos en un controlador de AngularJS)
+
+     Si modificamos la UI (estos input desde el browser), entonces el Modelo de Datos (que definimos en el inputController) se actualizará
+     -->
+     <p>Nombre<input ng-model="nombre"></p>
+     <p>Apellido: <input ng-model="apellido"></p>
+     <p>Rango: <input ng-model="rango"></p>
+
+     <!-- Mostramos el Estado de la app, se actualizará cuando se actualice la UI (en particar los input) ó el Modelo de Datos (cuando lo inicializamos) -->
+     <h3>Datos del tripulante</h3>
+     <p>Nombre completo: {{ nombre + " " + apellido}}</p>
+     <p>Rango: <span ng-bind="rango"></span></p>
+     </div>
+
+     <script type="text/javascript">
+     // 1. Creamos una app con AngularJS
+     var App = angular.module("starshipEnterprise", []);
+     // 2. Creamos el nuestro Modelo de Datos en un controller que le asignamos de nombre inputController, pero podria haber sido cualquier otro
+     App.controller("inputController", function($scope) {
+         // 3. Inicializamos el Modelo de Datos (representará el Estado de la app) que luego estará bindeado/vinculado con elementos de la UI
+         $scope.nombre= "Jean-Luc";
+         $scope.apellido= "Picard";
+         $scope.rango= "Capitan";
+     });
+     </script>
+
+     </body>
+     </html>
+   #+END_SRC
+** Referencias
+*** Referencias Oficiales
+    1. [[https://angular.io/guide/built-in-directives#ngModel][Angular - Built-in directives - Ng Model (angular.io)]]
+    2. [[https://angular.io/guide/two-way-binding][Angular - Two-way binding (angular.io)]]
+*** Referencias Extraoficiales
+    1. [[https://www.tutorialspoint.com/angular8/angular8_data_binding.htm][Angular 8 - Data Binding (tutorialspoint.com)]]
+    2. [[https://www.w3schools.com/angular/angular_databinding.asp][Angular Data Binding (w3schools.com)]]
+* TODO Referencias
+#+BEGIN_COMMENT
+pendiente validar cuales agregar como referencias..
+create a small app using cdn
+
+angularjs
+https://www.w3schools.com/angular/angular_examples.asp
+
+reactjs
+https://www.pluralsight.com/guides/using-react-router-with-cdn-links
+
+vuejs
+https://techformist.com/small-app-example-vue-cdn/
+https://compiletab.com/vuejs-hello-world/
+https://www.telerik.com/blogs/hello-vue-a-quick-tutorial-on-getting-started-with-vue
+#+END_COMMENT
