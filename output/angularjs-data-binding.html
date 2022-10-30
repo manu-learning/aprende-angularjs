@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+<body>
+
+<div ng-app="starshipEnterprise" ng-controller="inputController">
+<h3>Ingresar Datos Personales</h3>
+
+<!--
+Con el atributo ng-model bindeamos/vinculamos la UI (los elementos input del DOM) al Modelo de Datos (que definimos en un controlador de AngularJS)
+
+Si modificamos la UI (estos input desde el browser), entonces el Modelo de Datos (que definimos en el inputController) se actualizará
+-->
+<p>Nombre<input ng-model="nombre"></p>
+<p>Apellido: <input ng-model="apellido"></p>
+<p>Rango: <input ng-model="rango"></p>
+
+<!-- Mostramos el Estado de la app, se actualizará cuando se actualice la UI (en particar los input) ó el Modelo de Datos (cuando lo inicializamos) -->
+<h3>Datos del tripulante</h3>
+<p>Nombre completo: {{ nombre + " " + apellido}}</p>
+<p>Rango: <span ng-bind="rango"></span></p>
+</div>
+
+<script type="text/javascript">
+// 1. Creamos una app con AngularJS
+var App = angular.module("starshipEnterprise", []);
+// 2. Creamos el nuestro Modelo de Datos en un controller que le asignamos de nombre inputController, pero podria haber sido cualquier otro
+App.controller("inputController", function($scope) {
+    // 3. Inicializamos el Modelo de Datos (representará el Estado de la app) que luego estará bindeado/vinculado con elementos de la UI
+    $scope.nombre= "Jean-Luc";
+    $scope.apellido= "Picard";
+    $scope.rango= "Capitan";
+});
+</script>
+
+</body>
+</html>

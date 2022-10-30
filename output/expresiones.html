@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<div ng-app="" ng-init="cantidad=1;costo=5;nombre='Carlitos';apellido='Samuel';persona={nombre:'carlitos',edad:19};puntos=[10,10,0]">
+<h3>Operaciones basicas</h3>
+<p>Operar numeros entre llaves 5+5= {{5+5}}</p>
+<p>Operar numeros de ng-init, precio={{ cantidad * costo }}</p>
+<p>Operar numeros en ng-bind, precio=<span ng-bind="cantidad * costo"></span></p>
+<p>Concatenar cadenas de ng-init con las llaves.. {{nombre + " " + apellido}}</p>
+
+<h3>Accediendo a objetos</h3>
+<p>nombre={{persona.nombre}}, edad={{persona.edad}}</p>
+<p>usando ng-bind, nombre=<span ng-bind="persona.nombre"></span> edad=<span ng-bind="persona.edad"></span></p>
+</div>
+
+<h3>Arrays</h3>
+<p>Arrays de ng-init.. puntos[0] = {{ puntos[1] }}</p>
+<p>Arrays en ng-bind.. puntos[0] = <span ng-bind="puntos[1]"></span></p>
+</body>
+</html>
